@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -69,4 +70,24 @@ public class CalculatorTest {
         assertThat(actualResult).isEqualTo(0);
     }
 
+    @Test
+    public void digitsSet_shouldReturnTheSetOfDigits_OfZero() {
+        int number = 0;
+        Set<Integer> actualDigits = calculatorUnderTest.digitsSet(number);
+        assertThat(actualDigits).containsExactlyInAnyOrder(0);
+    }
+
+    @Test
+    public void digitsSet_shouldReturnTheSetOfDigits_OfPositiveInteger() {
+        int number = 95897;
+        Set<Integer> actualDigits = calculatorUnderTest.digitsSet(number);
+        assertThat(actualDigits).containsExactlyInAnyOrder(5, 7, 8, 9);
+    }
+
+    @Test
+    public void digitsSet_shouldReturnTheSetOfDigits_OfNegativeInteger() {
+        int number = -24908;
+        Set<Integer> actualDigits = calculatorUnderTest.digitsSet(number);
+        assertThat(actualDigits).containsExactlyInAnyOrder(2, 0, 4, 8, 9);
+    }
 }
