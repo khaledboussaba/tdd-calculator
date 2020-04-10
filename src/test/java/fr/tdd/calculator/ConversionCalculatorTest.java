@@ -53,4 +53,18 @@ public class ConversionCalculatorTest {
 
     }
 
+    @Test
+    @DisplayName("Either a volume of 3.78541 liters, in gallons, wes should get 1 gallon.")
+    public void litresToGallons_returnsOneGallon_whenConvertingTheEquivalentLitres() {
+        Double actualGallon = calculatorUnderTest.litresToGallon(3.78541);
+        assertThat(actualGallon).isCloseTo(1.0, withinPercentage(0.01));
+    }
+
+    @Test
+    @DisplayName("The area of a disk of radius 1 must be equal PI")
+    public void radiusToAreaOfCircle_returnsPI_whenWeHaveARadiusOfOne() {
+        Double actualArea = calculatorUnderTest.radiusToAreaOfCircle(1.0);
+        assertThat(actualArea).isCloseTo(Math.PI, withinPercentage(0.01));
+    }
+
 }
