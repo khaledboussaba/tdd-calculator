@@ -162,4 +162,18 @@ public class CalculatorTest {
         assertThat(actualDigits).containsExactlyInAnyOrder(2, 0, 4, 8, 9);
     }
 
+    @Test
+    public void factorialOf5_ShouldReturnTheCorrectAnswer() {
+        final int number = 5;
+        final int factorialOfTwelve = calculatorUnderTest.factorial(number);
+        assertThat(factorialOfTwelve).isEqualTo(5 * 4 * 3 * 2);
+    }
+
+    @Test
+    public void digitsSet_shouldReturnTheSetOfDigits_OfFactorialOf5() {
+        int number = calculatorUnderTest.factorial(5);
+        Set<Integer> actualDigits = calculatorUnderTest.digitsSet(number);
+        assertThat(actualDigits).containsExactlyInAnyOrder(0, 1, 2);
+    }
+
 }

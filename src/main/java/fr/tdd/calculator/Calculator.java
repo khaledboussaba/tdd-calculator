@@ -56,4 +56,11 @@ public class Calculator {
         return integers;
     }
 
+    public int factorial(int inputNumber) {
+        if (inputNumber <= 1) {
+            return inputNumber;
+        }
+        return inputNumber * factorial(inputNumber - 1);
+    }
+
 }
