@@ -56,8 +56,33 @@ public class CalculatorTest {
     }
 
     @Test
-    public void addition_addTwoPositiveNumbers() {
+    public void addition_addTwoPositiveIntegers() {
         assertThat(calculatorUnderTest.add(40, 2)).isEqualTo(42);
+    }
+
+    @Test
+    public void addition_addTwoNegativeIntegers() {
+        assertThat(calculatorUnderTest.add(-40, -2)).isEqualTo(-42);
+    }
+
+    @Test
+    public void addition_addPositiveIntegerWithNegativeInteger() {
+        assertThat(calculatorUnderTest.add(44, -2)).isEqualTo(42);
+    }
+
+    @Test
+    public void addition_addTwoPositiveDoubles() {
+        assertThat(calculatorUnderTest.add(40.0, 2.0)).isEqualTo(42.0);
+    }
+
+    @Test
+    public void addition_addTwoNegativeDoubles() {
+        assertThat(calculatorUnderTest.add(-40.0, -2.0)).isEqualTo(-42.0);
+    }
+
+    @Test
+    public void addition_addPositiveDoubleWithNegativeDouble() {
+        assertThat(calculatorUnderTest.add(44.0, -2.0)).isEqualTo(42.0);
     }
 
     @ParameterizedTest(name = "{0} + {1} should equal to {2}")
@@ -67,8 +92,20 @@ public class CalculatorTest {
         assertThat(actualResult).isEqualTo(expectResult);
     }
 
+    @ParameterizedTest(name = "{0} - {1} should equal to {2}")
+    @CsvSource({"44,2,42", "-44,-2,-42", "40,-2,42"})
+    public void subtraction_ShouldReturnTheSubtractionOfMultipleIntegers(int arg1, int arg2, int expectResult) {
+        assertThat(calculatorUnderTest.sub(arg1, arg2)).isEqualTo(expectResult);
+    }
+
+    @ParameterizedTest(name = "{0} - {1} should equal to {2}")
+    @CsvSource({"44.0,2.0,42.0", "-44.0,-2.0,-42.0", "40.0,-2.0,42.0"})
+    public void subtraction_ShouldReturnTheSubtractionOfMultipleDoubles(double arg1, double arg2, double expectResult) {
+        assertThat(calculatorUnderTest.sub(arg1, arg2)).isEqualTo(expectResult);
+    }
+
     @Test
-    public void multiplication_multiplyTwoPosistiveNumbers() {
+    public void multiplication_multiplyTwoPositiveNumbers() {
         assertThat(calculatorUnderTest.multiply(5, 7)).isEqualTo(35);
     }
 
@@ -77,6 +114,31 @@ public class CalculatorTest {
     public void multiplication_MultiplyOfZeroWithMultipleIntegersShouldReturnZero(int arg) {
         int actualResult = calculatorUnderTest.multiply(arg, 0);
         assertThat(actualResult).isEqualTo(0);
+    }
+
+    @ParameterizedTest(name = "{0} x {1} should equal to {2}")
+    @CsvSource({"21.0,2.0,42.0", "-21.0,-2.0,42.0", "21.0,-2.0,-42.0"})
+    public void multiplication_ShouldReturnTheMultiplicationOfMultipleDoubles(double arg1, double arg2, double expectedResult) {
+        assertThat(calculatorUnderTest.multiply(arg1, arg2)).isEqualTo(expectedResult);
+    }
+
+    @ParameterizedTest(name = "{0} / {1} should equal to {2}")
+    @CsvSource({"84,2,42", "-44,-2,22", "21,-2,-10"})
+    public void divide_ShouldReturnTheDivisionOfMultipleIntegersWhenDenominatorNotEqualToZero(int arg1, int arg2, int expectedResult) {
+        assertThat(calculatorUnderTest.divide(arg1, arg2)).isEqualTo(expectedResult);
+    }
+
+    @ParameterizedTest(name = "{0} / {1} should equal to {2}")
+    @CsvSource({"84.0,2.0,42.0", "-44.0,-2.0,22.0", "21.0,-2.0,-10.5"})
+    public void divide_ShouldReturnTheDivisionOfMultipleDoublesWhenDenominatorNotEqualToZero(double arg1, double arg2, double expectedResult) {
+        assertThat(calculatorUnderTest.divide(arg1, arg2)).isEqualTo(expectedResult);
+    }
+
+    @Test
+    public void divide_ShouldThrowIllegalArgumentExceptionWhenDenomenatorEqualToZero() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculatorUnderTest.divide(5, 0));
+        assertThat(exception.getMessage()).isEqualTo("Argument 'denominator' is '0'");
+        assertThat(exception.getMessage()).contains("denominator");
     }
 
     @Test
@@ -99,4 +161,5 @@ public class CalculatorTest {
         Set<Integer> actualDigits = calculatorUnderTest.digitsSet(number);
         assertThat(actualDigits).containsExactlyInAnyOrder(2, 0, 4, 8, 9);
     }
+
 }
