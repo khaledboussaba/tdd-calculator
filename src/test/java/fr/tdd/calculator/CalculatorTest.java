@@ -2,7 +2,9 @@ package fr.tdd.calculator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,11 +16,18 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 
+@ExtendWith(LoggingExtension.class)
 public class CalculatorTest {
 
     private static Instant startedAt;
 
     private Calculator calculatorUnderTest;
+
+    private Logger logger;
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
 
     @BeforeAll
     public static void initStartingTime() {
@@ -36,13 +45,13 @@ public class CalculatorTest {
 
     @BeforeEach
     public void initCalculator() {
-        System.out.println("call before each test");
+        logger.info("call before each test");
         calculatorUnderTest = new Calculator();
     }
 
     @AfterEach
     public void afterEachTest() {
-        System.out.println("call after each test");
+        logger.info("call after each test");
         calculatorUnderTest = null;
     }
 
