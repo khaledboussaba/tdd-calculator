@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Random;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
@@ -164,8 +165,8 @@ public class CalculatorTest {
 
     @Test
     public void factorialOf5_ShouldReturnTheCorrectAnswer() {
-        final int number = 5;
-        final int factorialOfTwelve = calculatorUnderTest.factorial(number);
+        int number = 5;
+        int factorialOfTwelve = calculatorUnderTest.factorial(number);
         assertThat(factorialOfTwelve).isEqualTo(5 * 4 * 3 * 2);
     }
 
@@ -174,6 +175,15 @@ public class CalculatorTest {
         int number = calculatorUnderTest.factorial(5);
         Set<Integer> actualDigits = calculatorUnderTest.digitsSet(number);
         assertThat(actualDigits).containsExactlyInAnyOrder(0, 1, 2);
+    }
+
+    @Test
+    public void multiplyAndDivide_shouldBeIdentity() {
+        Random random = new Random();
+        int a = 1 + random.nextInt(100);
+        int b = 1 + random.nextInt(3);
+        int c = calculatorUnderTest.divide(calculatorUnderTest.multiply(a, b), b);
+        assertThat(c).isEqualTo(a);
     }
 
 }
