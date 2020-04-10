@@ -7,4 +7,8 @@ public class CoversionCalculator {
         return fahrenheit;
     }
 
+    public Double fahrenheitToCelsius(double fahrenheit) {
+        Double celsius = (fahrenheit - 32) * 5 / 9;
+        return celsius;
+    }
 }
